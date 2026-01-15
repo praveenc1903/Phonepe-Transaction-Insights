@@ -84,32 +84,8 @@ Each table supports:
 Database credentials are **NOT hardcoded**.  
 They are securely managed using **Streamlit Secrets**.
 
-Phonepe-Transaction-Insights/
-│
-├── app/
-│   ├── __init__.py
-│   └── app.py                  # Main Streamlit application
-│
-├── ingest/
-│   ├── __init__.py
-│   ├── extract_data.py         # Extract PhonePe pulse data
-│   ├── insert_data_agg.py      # Insert aggregated data
-│   ├── insert_data_map.py      # Insert map-level data
-│   └── insert_data_top.py      # Insert top-level data
-│
-├── utils/
-│   ├── __init__.py
-│   └── database.py             # CockroachDB connection helper
-│
-├── certs/
-│   └── root.crt                
-│
-├── .streamlit/
-│   └── secrets.toml            # DB credentials
-│
-├── requirements.txt            # Python dependencies
-├── .gitignore
-└── README.md
+
+
 
 
 # 👤 Author
