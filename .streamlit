@@ -1,0 +1,6 @@
+[db]
+host = "loner-mink-20230.j77.aws-eu-west-2.cockroachlabs.cloud"
+port = 26257
+user = "praveen"
+password = "uMmyvQdb4m_UJfo_xt4WkA"
+database = "defaultdb"
