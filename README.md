@@ -84,22 +84,9 @@ Each table supports:
 Database credentials are **NOT hardcoded**.  
 They are securely managed using **Streamlit Secrets**.
 
-Phonepe-Transaction-Insights/
-│
-├── app/
-│ ├── app.py # Main Streamlit application
-│ ├── utils/
-│ │ └── database.py # CockroachDB connection
-│
-├── certs/
-│ └── root.crt # CockroachDB SSL certificate (ignored in Git)
-│
-├── .streamlit/
-│ └── secrets.toml # DB credentials (ignored in Git)
-│
-├── requirements.txt
-├── .gitignore
-└── README.md
+
+
+
 
 # 👤 Author
 
