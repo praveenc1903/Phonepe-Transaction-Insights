@@ -9,5 +9,5 @@ def get_connection():
         password=st.secrets["db"]["password"],
         database=st.secrets["db"]["database"],
         sslmode="verify-full",
-        sslrootcert=r"C:\Users\Praveen\AppData\Roaming\postgresql\root.crt"
+        
     )
