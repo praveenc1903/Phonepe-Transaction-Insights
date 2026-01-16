@@ -2,9 +2,19 @@ import sys
 from pathlib import Path
 import requests
 import json
-
-
-
+ROOT_DIR = Path(__file__).resolve().parents[1]
+sys.path.append(str(ROOT_DIR))
+from ingest.extract_data import (
+    Agg_trans,
+    Agg_user,
+    Agg_insur,
+    Map_trans,
+    Map_users,
+    Map_insur,
+    Top_trans,
+    Top_user,
+    Top_insur
+)
 ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
 
@@ -30,77 +40,81 @@ def load_df(query, columns):
     conn.close()
     df.columns = columns
     return df
+Aggre_transaction = Agg_trans
+Aggre_user = Agg_user
+Aggre_insurance = Agg_insur
 
+Map_transaction = Map_trans
+Map_user = Map_users
+Map_insurance = Map_insur
 
-Aggre_transaction = load_df(
-    "SELECT states, years, quarter, transaction_type, transaction_count, transaction_amount FROM aggregated_transaction",
-    ["States", "Years", "Quarter", "Transaction_type", "Transaction_count", "Transaction_amount"]
-)
-
-Aggre_user = load_df(
-    "SELECT states, years, quarter, brands, transaction_count, percentage FROM aggregated_user",
-    ["States", "Years", "Quarter", "Brands", "Transaction_count", "Percentage"]
-)
-
-Map_insurance = load_df(
-    "SELECT states, years, quarter, district, transaction_count, transaction_amount FROM map_insurance",
-    ["States", "Years", "Quarter", "District", "Transaction_count", "Transaction_amount"]
-)
-
-Map_transaction = load_df(
-    "SELECT states, years, quarter, district, transaction_count, transaction_amount FROM map_transaction",
-    ["States", "Years", "Quarter", "District", "Transaction_count", "Transaction_amount"]
-)
-
-Map_user = load_df(
-    "SELECT states, years, quarter, district, registered_user, app_opens FROM map_user",
-    ["States", "Years", "Quarter", "District", "RegisteredUser", "AppOpens"]
-)
-
-
-Top_insurance = load_df(
-    "SELECT states, years, quarter, pincode, transaction_count, transaction_amount FROM top_insurance",
-    ["States", "Years", "Quarter", "Pincodes", "Transaction_count", "Transaction_amount"]
-)
-
-Top_transaction = load_df(
-    "SELECT states, years, quarter, pincode, transaction_count, transaction_amount FROM top_transaction",
-    ["States", "Years", "Quarter", "Pincodes", "Transaction_count", "Transaction_amount"]
-)
-
-Top_user = load_df(
-    "SELECT states, years, quarter, pincode, registered_user FROM top_user",
-    ["States", "Years", "Quarter", "Pincodes", "RegisteredUser"]
-)
-
-
-Aggre_insurance = load_df(
-    """
-    SELECT
-        states,
-        years,
-        quarter,
-        insurance_type,
-        insurance_count,
-        insurance_amount
-    FROM aggregated_insurance
-    """,
-    [
-        "States",
-        "Years",
-        "Quarter",
-        "Insurance_type",
-        "Insurance_count",
-        "Insurance_amount"
-    ]
-)
-
-
-#----------------------------------------------------------------------
-#----------------------------------------------------------------------
-#----------------------------------------------------------------------
-#----------------------------------------------------------------------
-
+Top_transaction = Top_trans
+Top_user = Top_user
+Top_insurance = Top_insur
+#'''
+#Aggre_transaction = load_df(
+#    "SELECT states, years, quarter, transaction_type, transaction_count, transaction_amount FROM aggregated_transaction",
+#    ["States", "Years", "Quarter", "Transaction_type", "Transaction_count", "Transaction_amount"]
+#)
+#
+#Aggre_user = load_df(
+#    "SELECT states, years, quarter, brands, transaction_count, percentage FROM aggregated_user",
+#    ["States", "Years", "Quarter", "Brands", "Transaction_count", "Percentage"]
+#)
+#
+#Map_insurance = load_df(
+#    "SELECT states, years, quarter, district, transaction_count, transaction_amount FROM map_insurance",
+#    ["States", "Years", "Quarter", "District", "Transaction_count", "Transaction_amount"]
+#)
+#
+#Map_transaction = load_df(
+#    "SELECT states, years, quarter, district, transaction_count, transaction_amount FROM map_transaction",
+#    ["States", "Years", "Quarter", "District", "Transaction_count", "Transaction_amount"]
+#)
+#
+#Map_user = load_df(
+#    "SELECT states, years, quarter, district, registered_user, app_opens FROM map_user",
+#    ["States", "Years", "Quarter", "District", "RegisteredUser", "AppOpens"]
+#)
+#
+#
+#Top_insurance = load_df(
+#    "SELECT states, years, quarter, pincode, transaction_count, transaction_amount FROM top_insurance",
+#    ["States", "Years", "Quarter", "Pincodes", "Transaction_count", "Transaction_amount"]
+#)
+#
+#Top_transaction = load_df(
+#    "SELECT states, years, quarter, pincode, transaction_count, transaction_amount FROM top_transaction",
+#    ["States", "Years", "Quarter", "Pincodes", "Transaction_count", "Transaction_amount"]
+#)
+#
+#Top_user = load_df(
+#    "SELECT states, years, quarter, pincode, registered_user FROM top_user",
+#    ["States", "Years", "Quarter", "Pincodes", "RegisteredUser"]
+#)
+#
+#
+#Aggre_insurance = load_df(
+#    """
+#    SELECT
+#        states,
+#        years,
+#        quarter,
+#        insurance_type,
+#        insurance_count,
+#        insurance_amount
+#    FROM aggregated_insurance
+#    """,
+#    [
+#        "States",
+#        "Years",
+#        "Quarter",
+#        "Insurance_type",
+#        "Insurance_count",
+#        "Insurance_amount"
+#    ]
+#)
+#-------------Main------------------
 
 import uuid
 
@@ -1298,14 +1312,16 @@ if select == "Data Exploration":
 
             year = st.selectbox(
                 "**Select Year**",
-                Map_insurance["Years"].unique()
+                Map_insurance["Years"].unique(),
+                key="map_insurance_year"
             )
 
             df_year = Aggre_transaction_Y(Map_insurance, year)
 
             quarter = st.selectbox(
                 "**Select Quarter**",
-                df_year["Quarter"].unique()
+                df_year["Quarter"].unique(),
+                key="map_insurance_yea"
             )
 
             df_q = Aggre_transaction_Y_Q(df_year, quarter)
@@ -1360,7 +1376,8 @@ if select == "Data Exploration":
 
             year = st.selectbox(
                 "**Select Year**",
-                Map_user["Years"].unique()
+                Map_user["Years"].unique(),
+                key="map_insurance"
             )
 
             df_year = map_user_plot_1(Map_user, year)
